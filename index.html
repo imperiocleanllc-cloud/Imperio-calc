@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Imperio Clean Calc</title>
+  <link rel="manifest" href="manifest.json">
+  <style>
+    body { font-family: system-ui, sans-serif; background: #f4f6f8; padding: 20px; color: #333; }
+    .card { background: white; padding: 20px; border-radius: 16px; max-width: 400px; margin: auto; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    h2 { color: #1a365d; text-align: center; margin-top: 0; }
+    label { font-weight: bold; display: block; margin-top: 12px; font-size: 14px; }
+    input, select { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; font-size: 16px; margin-top: 4px; }
+    button { width: 100%; background: #2563eb; color: white; border: none; padding: 14px; border-radius: 8px; font-size: 16px; font-weight: bold; margin-top: 20px; }
+    .result { margin-top: 20px; padding: 15px; background: #eff6ff; border-radius: 8px; text-align: center; border: 1px solid #bfdbfe; }
+    .result h3 { margin: 5px 0 0 0; font-size: 32px; color: #1e40af; }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h2>Imperio Clean LLC</h2>
+    
+    <label>Pies Cuadrados (Sq Ft)</label>
+    <input type="number" id="sqft" placeholder="Ej. 1800">
+
+    <label>Tipo de Limpieza</label>
+    <select id="tipo">
+      <option value="0.10">Estándar ($0.10/sqft)</option>
+      <option value="0.18">Profunda ($0.18/sqft)</option>
+      <option value="0.22">Mudanza ($0.22/sqft)</option>
+    </select>
+
+    <label>Número de Baños</label>
+    <input type="number" id="banos" placeholder="Ej. 2">
+
+    <label>Número de Habitaciones</label>
+    <input type="number" id="cuartos" placeholder="Ej. 3">
+
+    <label>Extras ($)</label>
+    <input type="number" id="extras" placeholder="Ej. 40 para horno/nevera" value="0">
+
+    <button onclick="calcular()">Calcular Cotización</button>
+
+    <div class="result">
+      <small>Total Estimado:</small>
+      <h3 id="precioFinal">$0.00</h3>
+    </div>
+  </div>
+
+  <script>
+    function calcular() {
+      const sqft = parseFloat(document.getElementById('sqft').value) || 0;
+      const tarifa = parseFloat(document.getElementById('tipo').value);
+      const banos = parseFloat(document.getElementById('banos').value) || 0;
+      const cuartos = parseFloat(document.getElementById('cuartos').value) || 0;
+      const extras = parseFloat(document.getElementById('extras').value) || 0;
+
+      let total = (sqft * tarifa) + (banos * 25) + (cuartos * 10) + extras;
+
+      if (sqft > 0 && total < 120) total = 120;
+
+      document.getElementById('precioFinal').innerText = '$' + total.toFixed(2);
+    }
+  </script>
+</body>
+</html>
